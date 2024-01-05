@@ -1,24 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class InterstitialAds {
-  // InterstitialAd? get interstitialAd => _interstitialAd;
-  // InterstitialAd? _interstitialAd;
+  InterstitialAd? get interstitialAd => _interstitialAd;
+  InterstitialAd? _interstitialAd;
 
   // id
-  // ca-app-pub-7730748664456234/5800550619
+  // ca-app-pub-8330960025983267/6459072929
 
   // id test
   // ca-app-pub-3940256099942544/1033173712
 
   final adUnitId = Platform.isAndroid
       ? ''
-      : '';
+      : 'ca-app-pub-3940256099942544/1033173712';
 
   void loadAd({VoidCallback? callback}) {
-    callback?.call();
-    /*InterstitialAd.load(
+    InterstitialAd.load(
         adUnitId: adUnitId,
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
@@ -33,12 +33,11 @@ class InterstitialAds {
           onAdFailedToLoad: (LoadAdError error) {
             debugPrint('InterstitialAd failed to load: $error');
           },
-        ));*/
+        ));
   }
 
   Future<void> showAds(VoidCallback? onNext) async {
-    onNext?.call();
-    /*try {
+    try {
       if (_interstitialAd != null) {
         _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
             // Called when the ad showed the full screen content.
@@ -71,6 +70,6 @@ class InterstitialAds {
         showAds(onNext);
       });
       onNext?.call();
-    }*/
+    }
   }
 }

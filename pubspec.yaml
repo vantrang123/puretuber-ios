@@ -101,6 +101,7 @@ dependencies:
   ionicons: ^0.2.1
   extractor: ^0.0.3
   soundcloud_explode_dart: ^1.0.0
+  google_mobile_ads: ^3.0.0
 
 dev_dependencies:
   flutter_test:

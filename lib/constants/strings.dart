@@ -4,7 +4,7 @@ class Strings {
   Strings._();
 
   //General
-  static const String appName = "Pure Tuber";
+  static const String appName = "SonicListen";
 
   static const String appPackageName = "com.fv.musictuber";
 

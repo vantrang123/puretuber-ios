@@ -222,7 +222,9 @@ class _PlayerScreenState extends State<PlayerScreen>
         ?.initVideoPlayerControl(
         VideoPlayerController.networkUrl(Uri.parse(url)))
         .then((value) {
-      seek2LastPosition();
+          _checkShowAds(() {
+            seek2LastPosition();
+          });
     });
   }
 
@@ -322,31 +324,25 @@ class _PlayerScreenState extends State<PlayerScreen>
   Widget observerLinkStream() {
     return Observer(builder: (context) {
       if (_exploreStore.videoStreamUrl?.isNotEmpty == true && isResetVideoController) {
-        _checkShowAds(() {
-          initializePlayer(_exploreStore.videoStreamUrl!);
-          initializeAudio(_exploreStore.audioStreamUrl!, context);
-        });
+        initializePlayer(_exploreStore.videoStreamUrl!);
+        initializeAudio(_exploreStore.audioStreamUrl!, context);
       }
       return SizedBox();
     });
   }
 
   Future<void> _checkShowAds(VoidCallback callback) async {
-    // final times =
-    //     await getIt<SharedPreferenceHelper>().countTimesPlay ??
-    //     0;
+    final times = await getIt<SharedPreferenceHelper>().countTimesPlay ?? 0;
 
-    getIt<InterstitialAds>().showAds(() {
+    if (times >= 1) {
+      getIt<InterstitialAds>().showAds(() {
+        callback.call();
+        getIt<SharedPreferenceHelper>().resetTimesPlay();
+      });
+    } else {
       callback.call();
-      getIt<SharedPreferenceHelper>().resetTimesPlay();
-    });
-
-    // if (times >= 1) {
-    //
-    // } else {
-    //   callback.call();
-    //   getIt<SharedPreferenceHelper>().increaseTimesTimesPlay();
-    // }
+      getIt<SharedPreferenceHelper>().increaseTimesTimesPlay();
+    }
   }
 
   void _handleStartPlayAudio() {
